@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6822720449276247012}
   - component: {fileID: 6074968877388891616}
+  - component: {fileID: -6186085071447776945}
   - component: {fileID: 4699984326225746255}
   - component: {fileID: 7381964947983370062}
   - component: {fileID: 651255899348980228}
@@ -18,7 +19,7 @@ GameObject:
   - component: {fileID: 4459744473567803700}
   m_Layer: 0
   m_Name: Avatar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,6 +90,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6186085071447776945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3002264220021473914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab99d5b79e116c24183b4796b4530bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4699984326225746255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,11 +161,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3002264220021473914}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 829de5a78aa8a0045b47e0ec334d60b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  result:
+    value: 
 --- !u!61 &6778626844593628412
 BoxCollider2D:
   m_ObjectHideFlags: 0

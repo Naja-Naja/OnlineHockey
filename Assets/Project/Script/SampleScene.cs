@@ -11,6 +11,7 @@ public class SampleScene : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = "Player";
         // PhotonServerSettingsの設定内容を使ってマスターサーバーへ接続する
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.SendRate = 30;
     }
 
     // マスターサーバーへの接続が成功した時に呼ばれるコールバック
@@ -25,8 +26,8 @@ public class SampleScene : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-        //自身のアバター（ネットワークオブジェクト）を生成する
-        var position = new Vector3(-6f,0f);
+            //自身のアバター（ネットワークオブジェクト）を生成する
+            var position = new Vector3(-6f,0f);
         PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
         }
         else
