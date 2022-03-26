@@ -46,13 +46,15 @@ public class BallController : MonoBehaviourPunCallbacks
         {
             IsGameEnd = true;
         }
+        rb2d.velocity = rb2d.velocity * 1.02f;
+        
     }
 
     [PunRPC]
     private void RpcBallBound(Vector3 position,Vector2 vector)
     {
         this.transform.position = position;
-        rb2d.velocity = vector;
+        rb2d.velocity = vector*1.02f;
     }
 
 }
