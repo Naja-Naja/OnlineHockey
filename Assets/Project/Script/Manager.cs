@@ -9,11 +9,17 @@ using System;
 public class Manager : MonoBehaviourPunCallbacks
 {
     public ReactiveProperty<String> result;
+    public ReactiveProperty<bool> canRetry;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
-
+        canRetry.Value = false;
+    }
+    private void Start()
+    {
+        IDisposable subscription = canRetry.Subscribe(x => {
+            gameInit(x);
+        });
     }
     public override void OnJoinedRoom()
     {
@@ -46,5 +52,35 @@ public class Manager : MonoBehaviourPunCallbacks
     void gameEndEvent()
     {
         //ã§í èàóùïîï™
+        if (PhotonNetwork.IsMasterClient)
+        {
+            canRetry.Value = true;
+        }
+    }
+    void gameInit(bool retry)
+    {
+        Debug.Log("InitCall");
+        if (retry == true) { return; }
+        //èâä˙âªèàóù
+        photonView.RPC(nameof(RpcGameInit), RpcTarget.All);
+        var tmp= GameObject.FindGameObjectsWithTag("Player");
+        //GameObject tmp = GameObject.Find("Avatar");//.GetComponent<AvatarManager>().gameStart = false;
+        if (tmp != null)
+        {
+            Debug.Log("Setfalse");
+            for (int i = 0; i < tmp.Length-1; i++)
+            {
+                tmp[i].GetComponent<AvatarManager>().gameStart = false;
+            }
+
+
+        }
+    }
+    [PunRPC]
+    void RpcGameInit()
+    {
+        result.Value = "";
+        var ball = GameObject.FindWithTag("ball");
+        Destroy(ball);
     }
 }

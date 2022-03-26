@@ -25,8 +25,8 @@ public class BallController : MonoBehaviourPunCallbacks
     }
     void ballStart()
     {
-        //rb2d.AddForce(new Vector2(15f, 15f));
-        rb2d.AddForce(new Vector2(-30f, -15f));//test
+        rb2d.AddForce(new Vector2(15f, 15f));
+        //rb2d.AddForce(new Vector2(-30f, -15f));//test
         movestart = true;
     }
     private void OnCollisionEnter2D(Collision2D collision)

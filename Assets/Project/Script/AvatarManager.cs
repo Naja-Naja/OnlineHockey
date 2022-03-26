@@ -4,8 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 public class AvatarManager : MonoBehaviourPunCallbacks
 {
-    bool gameStart = false;
-    bool IsMaster = false;
+    public bool gameStart = false;
+    public bool IsMaster = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +28,7 @@ public class AvatarManager : MonoBehaviourPunCallbacks
             if (players.Length > 1 && gameStart == false && IsMaster == true)
             {
                 //ƒQ[ƒ€ŠJnˆ—
+                Debug.Log("gamestart");
                 var position = new Vector3(-3f, 0f);
                 PhotonNetwork.Instantiate("ball", position, Quaternion.identity);
                 gameStart = true;
