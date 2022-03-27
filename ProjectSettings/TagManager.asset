@@ -8,6 +8,7 @@ TagManager:
   - ball
   - Bullet
   - rpcline
+  - wall
   layers:
   - Default
   - TransparentFX

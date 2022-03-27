@@ -6,6 +6,8 @@ using Photon.Pun;
 public class BallController : MonoBehaviourPunCallbacks
 {
     [SerializeField] Rigidbody2D rb2d;
+    [SerializeField] AudioClip wallBound;
+    [SerializeField] AudioClip playerBound;
     bool movestart = false;
     bool IsGameEnd = false;
     bool speedCon = false;
@@ -47,6 +49,7 @@ public class BallController : MonoBehaviourPunCallbacks
     {
         if (collision.gameObject.tag == "Player")
         {
+
             if (collision.gameObject.GetPhotonView().IsMine == false) { Debug.Log("‚â‚ç‚È‚¢"); }
             else
             {
@@ -59,6 +62,10 @@ public class BallController : MonoBehaviourPunCallbacks
         else if (collision.gameObject.tag == "deadline")
         {
             IsGameEnd = true;
+        }
+        else if (collision.gameObject.tag == "wall")
+        {
+            AudioManager.SE_Play(wallBound);
         }
         //else if (collision.gameObject.tag == "rpcline")
         //{
@@ -84,6 +91,7 @@ public class BallController : MonoBehaviourPunCallbacks
     {
         this.transform.position = position;
         rb2d.velocity = vector*1.02f;
+        AudioManager.SE_Play(playerBound);
     }
     //[PunRPC]
     //private void RpcBallDead(Vector3 position, Vector2 vector)
