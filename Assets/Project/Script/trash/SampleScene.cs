@@ -36,7 +36,5 @@ public class SampleScene : MonoBehaviourPunCallbacks
             var position = new Vector3(6f, 0f);
             PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
         }
-
-
     }
 }
