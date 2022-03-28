@@ -8,6 +8,7 @@ public class BallController : MonoBehaviourPunCallbacks
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] AudioClip wallBound;
     [SerializeField] AudioClip playerBound;
+    [SerializeField] TrailRenderer trailRenderer;
     bool movestart = false;
     bool IsGameEnd = false;
     bool speedCon = false;
@@ -72,6 +73,8 @@ public class BallController : MonoBehaviourPunCallbacks
         //    photonView.RPC(nameof(RpcBallBound), RpcTarget.All);
         //}
         rb2d.velocity = rb2d.velocity * 1.02f;
+        print(rb2d.velocity.magnitude);
+        trailRenderer.time = rb2d.velocity.magnitude / 20;
         
     }
     //private void OnTriggerEnter2D(Collider2D collision)
