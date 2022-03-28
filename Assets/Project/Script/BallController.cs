@@ -8,9 +8,12 @@ public class BallController : MonoBehaviourPunCallbacks
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] AudioClip wallBound;
     [SerializeField] AudioClip playerBound;
+    [SerializeField] AudioClip playerSmashBound;
+
     bool movestart = false;
     bool IsGameEnd = false;
     bool speedCon = false;
+    bool smash = false;
     void Start()
     {
         Invoke("ballStart", 3f);
@@ -49,8 +52,18 @@ public class BallController : MonoBehaviourPunCallbacks
     {
         if (collision.gameObject.tag == "Player")
         {
-
+            Debug.Log(Vector2.Distance(this.transform.position, collision.transform.position));
             if (collision.gameObject.GetPhotonView().IsMine == false) { Debug.Log("やらない"); }
+            //スマッシュ
+            else if (1f<Vector2.Distance(this.transform.position,collision.transform.position))
+            {
+                
+                photonView.RPC(nameof(RpcBallSmash), RpcTarget.All,
+                    new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z),
+                    rb2d.velocity
+                    );
+            }
+            //通常反射
             else
             {
                 photonView.RPC(nameof(RpcBallBound), RpcTarget.All,
@@ -89,9 +102,23 @@ public class BallController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RpcBallBound(Vector3 position,Vector2 vector)
     {
+        
         this.transform.position = position;
-        rb2d.velocity = vector*1.02f;
+        if (smash)
+        {
+            rb2d.velocity = new Vector2(vector.x - Mathf.Sign(vector.x) * 3f, vector.y - Mathf.Sign(vector.y) * 3f);
+        }
+        else { rb2d.velocity = vector * 1.02f; }
         AudioManager.SE_Play(playerBound);
+        smash = false;
+    }
+    [PunRPC]
+    private void RpcBallSmash(Vector3 position, Vector2 vector)
+    {
+        smash = true;
+        this.transform.position = position;
+        rb2d.velocity = new Vector2(vector.x + Mathf.Sign(vector.x) * 3f, vector.y + Mathf.Sign(vector.y) * 3f) * 1.2f;
+        AudioManager.SE_Play(playerSmashBound);
     }
     //[PunRPC]
     //private void RpcBallDead(Vector3 position, Vector2 vector)
