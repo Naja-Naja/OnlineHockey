@@ -6,6 +6,9 @@ TagManager:
   tags:
   - deadline
   - ball
+  - Bullet
+  - rpcline
+  - wall
   layers:
   - Default
   - TransparentFX
