@@ -7,12 +7,12 @@ using System;
 public class ResultMessage : MonoBehaviour
 {
 
-    [SerializeField] Text text;
-    [SerializeField] Manager manager;
-    void Start()
-    {
-        IDisposable subscription = manager.result.Subscribe(x => {
-            text.text=x;
-        });
-    }
+    //[SerializeField] Text text;
+    //[SerializeField] Manager manager;
+    //void Start()
+    //{
+    //    IDisposable subscription = manager.result.Subscribe(x => {
+    //        text.text=x;
+    //    });
+    //}
 }

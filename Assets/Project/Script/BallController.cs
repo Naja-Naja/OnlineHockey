@@ -22,7 +22,7 @@ public class BallController : MonoBehaviourPunCallbacks
     }
     void ballStart()
     {
-        rb2d.AddForce(new Vector2(15f, 15f));
+        rb2d.AddForce(new Vector2(20f, 15f));
         //rb2d.AddForce(new Vector2(-30f, -15f));//test
         //movestart = true;
         Invoke("startSpeedCon", 0.5f);
@@ -52,7 +52,13 @@ public class BallController : MonoBehaviourPunCallbacks
         if (collision.gameObject.tag == "Player")
         {
             //Debug.Log(Vector2.Distance(this.transform.position, collision.transform.position));
-            if (collision.gameObject.GetPhotonView().IsMine == false) { Debug.Log("やらない"); }
+            if (collision.gameObject.GetPhotonView().IsMine == false) 
+            { 
+                Debug.Log("やらない");
+                rb2d.velocity = Vector2.zero;
+                speedCon = false;
+                Invoke("startSpeedCon", 0.2f);
+            }
             //スマッシュ
             else if (1f<Vector2.Distance(this.transform.position,collision.transform.position))
             {

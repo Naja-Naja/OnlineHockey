@@ -25,7 +25,7 @@ public class RoomAPI : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             //自身が部屋主であれば部屋のプロパティを"Matching"に設定する
-            SetRoomProperties("Matching");
+            SetRoomProperties("Ready");
             //hashtable["RoomState"] = "Matching";
             //PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
         }
