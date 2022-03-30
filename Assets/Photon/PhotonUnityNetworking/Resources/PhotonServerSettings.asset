@@ -44,6 +44,8 @@ MonoBehaviour:
   - RpcGameInit
   - RpcBallDead
   - RpcBallSmash
+  - BallDestroy
+  - RpcResultUIInit
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -57,7 +57,7 @@ public class Manager : MonoBehaviourPunCallbacks
             Debug.Log("Setfalse");
             for (int i = 0; i < tmp.Length-1; i++)
             {
-                tmp[i].GetComponent<AvatarManager>().gameStart = false;
+                //tmp[i].GetComponent<AvatarManager>().gameStart = false;
             }
         }
     }
