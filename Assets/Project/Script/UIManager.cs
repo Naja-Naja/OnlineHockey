@@ -12,9 +12,14 @@ public class UIManager : MonoBehaviour
     //[SerializeField] GameObject textobj;
     [SerializeField] Text text;
     [SerializeField] Text result;
+    [SerializeField] Text leftTeamList;
+    [SerializeField] Text RightTeamList;
     //リトライ
     [SerializeField] GameObject retryButton;
     private Button retryButton_button;
+    //ゲームを出る
+    [SerializeField] GameObject leftGameButton;
+    private Button leftGameButton_button;
     //スタート
     [SerializeField] GameObject startButton;
     private Button startButton_button;
@@ -24,6 +29,9 @@ public class UIManager : MonoBehaviour
     //右チーム参加
     [SerializeField] GameObject rightTeamButton;
     private Button rightTeamButton_button;
+    //チーム選択にもどる
+    [SerializeField] GameObject backChoiceTeamButton;
+    private Button backChoiceTeamButton_button;
 
     void Awake()
     {
@@ -45,6 +53,10 @@ public class UIManager : MonoBehaviour
         retryButton.SetActive(x);
         });
 
+        IDisposable subscription_leftgame = roomManager.canLeftGame.Subscribe(x => {
+            leftGameButton.SetActive(x);
+        });
+
         IDisposable subscription_leftTeam = roomManager.canjoinTeam.Subscribe(x => {
             leftTeamButton.SetActive(x);
         });
@@ -57,9 +69,16 @@ public class UIManager : MonoBehaviour
             startButton.SetActive(x);
         });
 
+        IDisposable subscription_back = roomManager.canBack.Subscribe(x => {
+            backChoiceTeamButton.SetActive(x);
+        });
+
 
         retryButton_button = retryButton.GetComponent<Button>();
         retryButton_button.onClick.AddListener(OnClickRetryButton);
+
+        leftGameButton_button = leftGameButton.GetComponent<Button>();
+        leftGameButton_button.onClick.AddListener(OnClickLeftGameButton);
 
         leftTeamButton_button = leftTeamButton.GetComponent<Button>();
         leftTeamButton_button.onClick.AddListener(OnClickLeftTeamButton);
@@ -69,6 +88,9 @@ public class UIManager : MonoBehaviour
 
         startButton_button = startButton.GetComponent<Button>();
         startButton_button.onClick.AddListener(OnClickStartButton);
+
+        backChoiceTeamButton_button = backChoiceTeamButton.GetComponent<Button>();
+        backChoiceTeamButton_button.onClick.AddListener(OnClickBackButton);
     }
     private void OnClickRetryButton()
     {
@@ -90,4 +112,15 @@ public class UIManager : MonoBehaviour
         Debug.Log("callgamestart");
         roomManager.GameStart();
     }
+    private void OnClickBackButton()
+    {
+        Debug.Log("callgamestart");
+        roomManager.BackChoiceTeam();
+    }
+    private void OnClickLeftGameButton()
+    {
+        Debug.Log("callgamestart");
+        roomManager.leftGame();
+    }
+    
 }
