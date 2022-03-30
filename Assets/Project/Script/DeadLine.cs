@@ -7,18 +7,20 @@ using System;
 
 public class DeadLine : MonoBehaviour
 {
-    [SerializeField] bool IsMasterSide;
+    [SerializeField] bool IsLeftSide;
+    [SerializeField] RoomManager_main roomManager;
     Subject<Unit> gameOver { get; set; } = new Subject<Unit>();
     public IObservable<Unit> GameOver => gameOver;
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (IsLeftSide==true)
+        {
+            GameOver.Subscribe(x => roomManager.GameJudge("Left"));
+        }
+        else if (IsLeftSide==false)
+        {
+            GameOver.Subscribe(x => roomManager.GameJudge("Right"));
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
