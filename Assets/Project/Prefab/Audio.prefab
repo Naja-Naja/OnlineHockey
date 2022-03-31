@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -2081663247451575337}
   - component: {fileID: -5518345574578217847}
   - component: {fileID: -4207289098887067016}
+  - component: {fileID: -1299405538015959276}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SE: {fileID: -5518345574578217847}
   BGM: {fileID: -4207289098887067016}
+  bgmVol: 0
 --- !u!82 &-5518345574578217847
 AudioSource:
   m_ObjectHideFlags: 0
@@ -239,3 +241,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1299405538015959276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2600033125887278227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844cac67a5d9a2f45bdb95be0ddc6f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameBGM: {fileID: 8300000, guid: ac0b1ef5e53620b48a6bf7c8f8894e1b, type: 3}
+  roomBGM: {fileID: 8300000, guid: 7441ee79287b4ed458435598c59b5fa3, type: 3}
