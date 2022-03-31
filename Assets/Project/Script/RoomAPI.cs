@@ -72,6 +72,26 @@ public class RoomAPI : MonoBehaviourPunCallbacks
         string myTeam = (PhotonNetwork.LocalPlayer.CustomProperties["myTeam"] is string value) ? value : "null";
         if (myTeam == "Left")
         {
+            //int count = 0;
+            //var players = PhotonNetwork.PlayerList;
+            //for (int i = 0; i < players.Length; i++)
+            //{
+            //    string tmp = (string)players[i].CustomProperties["myTeam"];
+            //    if (tmp == "Left")
+            //    {
+            //        count++;
+            //    }
+            //}
+            //if (count == 1)
+            //{
+            //    //自身のアバター（ネットワークオブジェクト）を生成する
+            //    var position = new Vector3(-6f, 0f);
+            //    PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            //}
+            //else if (count == 2)
+            //{
+
+            //}
             //自身のアバター（ネットワークオブジェクト）を生成する
             var position = new Vector3(-6f, 0f);
             PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
