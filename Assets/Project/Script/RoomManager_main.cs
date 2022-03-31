@@ -18,12 +18,20 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     public ReactiveProperty<string> result;
     bool avatarCreated = false;
     string myTeam;
+    public string playerName="Player";
     private void Awake()
     {
         //roomAPI = new RoomAPI();
         //エントリーポイントentrypoint
         //サーバーに接続
-        roomAPI.ConnectServer();
+    }
+    public void InputPlayerName(string playername)
+    {
+        if (playername == "")
+        {
+            playername = playerName;
+        }
+        roomAPI.ConnectServer(playername);
     }
     //サーバー接続のコールバックでルームに接続
     public override void OnConnectedToMaster()
