@@ -6,6 +6,8 @@ using UniRx;
 using System;
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] AudioClip choice;
+    [SerializeField] AudioClip undo;
     //[SerializeField] Manager manager;
     [SerializeField] RoomManager_main roomManager;
     [SerializeField] PlayerList playerList;
@@ -104,31 +106,37 @@ public class UIManager : MonoBehaviour
     private void OnClickRetryButton()
     {
         Debug.Log("call");
+        AudioManager.SE_Play(choice);
         roomManager.Retry();
     }
     private void OnClickLeftTeamButton()
     {
         Debug.Log("call");
+        AudioManager.SE_Play(choice);
         roomManager.joinLeftTeam();
     }
     private void OnClickRightTeamButton()
     {
         Debug.Log("call");
+        AudioManager.SE_Play(choice);
         roomManager.joinRightTeam();
     }
     private void OnClickStartButton()
     {
         Debug.Log("callgamestart");
+        AudioManager.SE_Play(choice);
         roomManager.GameStart();
     }
     private void OnClickBackButton()
     {
         Debug.Log("callgamestart");
+        AudioManager.SE_Play(undo);
         roomManager.BackChoiceTeam();
     }
     private void OnClickLeftGameButton()
     {
         Debug.Log("callgamestart");
+        AudioManager.SE_Play(undo);
         roomManager.leftGame();
     }
     
