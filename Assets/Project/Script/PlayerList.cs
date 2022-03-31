@@ -28,4 +28,13 @@ public class PlayerList : MonoBehaviourPunCallbacks
             }
         }
     }
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        string room = (string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"];
+        if (room == "Game")
+        {
+            leftPlayerList.Value = "";
+            rightPlayerList.Value = "";
+        }
+    }
 }
