@@ -7,6 +7,7 @@ using UniRx;
 
 public class RoomManager_main : MonoBehaviourPunCallbacks
 {
+    
     [SerializeField] RoomAPI roomAPI;
     public ReactiveProperty<bool> canjoinTeam;
     public ReactiveProperty<bool> canStart;
@@ -94,6 +95,7 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         //RoomPropertiesUpDate_ChangeUI();
+        //RoomPropertiesUpDate_BGMChanger();
         RoomPropertiesUpDate_CreateAvatar();
         RoomPropertiesUpDate_Checkmywin();
         //RoomPropertiesUpDate_CheckCanRetry();
