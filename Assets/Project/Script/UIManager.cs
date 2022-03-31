@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,43 +46,43 @@ public class UIManager : MonoBehaviour
         //});
 
         IDisposable subscription_text = roomManager.text.Subscribe(x => {
-            text.text=x;
+            TextFade(x, text);
         });
 
         IDisposable subscription_result = roomManager.result.Subscribe(x => {
-            result.text = x;
+            TextFade(x,result);
         });
 
         IDisposable subscription_leftplayerlist = playerList.leftPlayerList.Subscribe(x => {
-            leftTeamList.text = x;
+            TextFade(x, leftTeamList);
         });
 
         IDisposable subscription_rightplayerlist = playerList.rightPlayerList.Subscribe(x => {
-            rightTeamList.text = x;
+            TextFade(x, rightTeamList);
         });
 
         IDisposable subscription = roomManager.canRetry.Subscribe(x => {
-        retryButton.SetActive(x);
+            ButtonFadeScale(retryButton, x);
         });
 
         IDisposable subscription_leftgame = roomManager.canLeftGame.Subscribe(x => {
-            leftGameButton.SetActive(x);
+            ButtonFadeScale(leftGameButton, x);
         });
 
         IDisposable subscription_leftTeam = roomManager.canjoinTeam.Subscribe(x => {
-            leftTeamButton.SetActive(x);
+            ButtonFadeScale(leftTeamButton,x);
         });
 
         IDisposable subscription_rightTeam = roomManager.canjoinTeam.Subscribe(x => {
-            rightTeamButton.SetActive(x);
+            ButtonFadeScale(rightTeamButton, x);
         });
 
         IDisposable subscription_start = roomManager.canStart.Subscribe(x => {
-            startButton.SetActive(x);
+            ButtonFadeScale(startButton, x);
         });
 
         IDisposable subscription_back = roomManager.canBack.Subscribe(x => {
-            backChoiceTeamButton.SetActive(x);
+            ButtonFadeScale(backChoiceTeamButton, x);
         });
 
 
@@ -139,5 +140,25 @@ public class UIManager : MonoBehaviour
         AudioManager.SE_Play(undo);
         roomManager.leftGame();
     }
-    
+    private void ButtonFadeScale(GameObject button, bool Isactive)
+    {
+        if (Isactive)
+        {
+            button.transform.DOScale(Vector3.one, 0.1f).OnStart(() => button.SetActive(true));
+
+        }
+        else
+        {
+            button.transform.DOScale(Vector3.zero, 0.1f).OnComplete(() => button.SetActive(false));
+
+        }
+    }
+    private void TextFade(string sentence,Text text)
+    {
+        text.text = "";
+        text.DOText(sentence, 0.3f);
+    }
+    //private void ButtonFadeInScale(GameObject button)
+    //{
+    //}
 }
