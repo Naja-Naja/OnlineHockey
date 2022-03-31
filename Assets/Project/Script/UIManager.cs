@@ -8,12 +8,13 @@ public class UIManager : MonoBehaviour
 {
     //[SerializeField] Manager manager;
     [SerializeField] RoomManager_main roomManager;
+    [SerializeField] PlayerList playerList;
     [SerializeField] GameObject title;
     //[SerializeField] GameObject textobj;
     [SerializeField] Text text;
     [SerializeField] Text result;
     [SerializeField] Text leftTeamList;
-    [SerializeField] Text RightTeamList;
+    [SerializeField] Text rightTeamList;
     //ƒŠƒgƒ‰ƒC
     [SerializeField] GameObject retryButton;
     private Button retryButton_button;
@@ -47,6 +48,14 @@ public class UIManager : MonoBehaviour
 
         IDisposable subscription_result = roomManager.result.Subscribe(x => {
             result.text = x;
+        });
+
+        IDisposable subscription_leftplayerlist = playerList.leftPlayerList.Subscribe(x => {
+            leftTeamList.text = x;
+        });
+
+        IDisposable subscription_rightplayerlist = playerList.rightPlayerList.Subscribe(x => {
+            rightTeamList.text = x;
         });
 
         IDisposable subscription = roomManager.canRetry.Subscribe(x => {
