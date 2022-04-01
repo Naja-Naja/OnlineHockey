@@ -178,4 +178,5 @@ MonoBehaviour:
   rb2d: {fileID: 7624739161519469799}
   wallBound: {fileID: 8300000, guid: 603d485c866a2fc49b4cb37a278fa218, type: 3}
   playerBound: {fileID: 8300000, guid: 568dcd185bf8dfc4393874dbe45f9146, type: 3}
-  playerSmashBound: {fileID: 8300000, guid: dcdd105747026a946a9829183b7cb808, type: 3}
+  playerSmashBound: {fileID: 8300000, guid: cddd8e6d79735d845932464203c18ddb, type: 3}
+  smashEffect: {fileID: 8112413664996259502, guid: ea72e2712fb3a9949bab18fa3a4e16b9, type: 3}

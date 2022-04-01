@@ -145,7 +145,7 @@ public class RoomAPI : MonoBehaviourPunCallbacks
         }
         PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
     }
-    [PunRPC]
+    //[PunRPC]
     public void BallDestroy()
     {
         //ƒ{[ƒ‹‚ğíœ
