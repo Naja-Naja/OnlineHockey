@@ -7,8 +7,12 @@ using UniRx;
 using System;
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] TitleUIManager titleUIManager;
+    [SerializeField] Text titleText;
+    [SerializeField] GameObject textBox;
     [SerializeField] AudioClip choice;
     [SerializeField] AudioClip undo;
+    [SerializeField] AudioClip judge;
     //[SerializeField] Manager manager;
     [SerializeField] RoomManager_main roomManager;
     [SerializeField] PlayerList playerList;
@@ -18,6 +22,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text result;
     [SerializeField] Text leftTeamList;
     [SerializeField] Text rightTeamList;
+    //リトライ
+    [SerializeField] GameObject titleStartButton;
+    private Button titleStartButton_button;
     //リトライ
     [SerializeField] GameObject retryButton;
     private Button retryButton_button;
@@ -44,6 +51,18 @@ public class UIManager : MonoBehaviour
         //IDisposable subscription_textobj = roomManager.activeText.Subscribe(x => {
         //    textobj.SetActive(x);
         //});
+        //IDisposable subscription_title = titleUIManager.Title.Subscribe(x => {
+        //    TextFade(x, titleText);
+        //});
+
+        //IDisposable subscription_titleStart = titleUIManager.startbutton.Subscribe(x => {
+        //    ButtonFadeScale(titleStartButton, x);
+        //    Debug.Log("callstartbutton" + x);
+        //});
+
+        //IDisposable subscription_textbox = titleUIManager.textBox.Subscribe(x => {
+        //    ButtonFadeScale(textBox, x);
+        //});
 
         IDisposable subscription_text = roomManager.text.Subscribe(x => {
             TextFade(x, text);
@@ -51,6 +70,10 @@ public class UIManager : MonoBehaviour
 
         IDisposable subscription_result = roomManager.result.Subscribe(x => {
             TextFade(x,result);
+            if (x != "")
+            {
+                AudioManager.SE_Play(judge);
+            }
         });
 
         IDisposable subscription_leftplayerlist = playerList.leftPlayerList.Subscribe(x => {
@@ -85,6 +108,8 @@ public class UIManager : MonoBehaviour
             ButtonFadeScale(backChoiceTeamButton, x);
         });
 
+        titleStartButton_button = titleStartButton.GetComponent<Button>();
+        titleStartButton_button.onClick.AddListener(OnClickTitleStartButton);
 
         retryButton_button = retryButton.GetComponent<Button>();
         retryButton_button.onClick.AddListener(OnClickRetryButton);
@@ -103,6 +128,8 @@ public class UIManager : MonoBehaviour
 
         backChoiceTeamButton_button = backChoiceTeamButton.GetComponent<Button>();
         backChoiceTeamButton_button.onClick.AddListener(OnClickBackButton);
+
+        //titleUIManager.OpenTitlePage();
     }
     private void OnClickRetryButton()
     {
@@ -139,6 +166,17 @@ public class UIManager : MonoBehaviour
         Debug.Log("callgamestart");
         AudioManager.SE_Play(undo);
         roomManager.leftGame();
+    }
+    private void OnClickTitleStartButton()
+    {
+        AudioManager.SE_Play(choice);
+        roomManager.InputPlayerName(textBox.GetComponent<InputField>().text);
+        Debug.Log("yorname is " + textBox.GetComponent<InputField>().text);
+        //titleUIManager.CloseTitlePage();
+        TextFade("", titleText);
+        ButtonFadeScale(textBox, false);
+        ButtonFadeScale(titleStartButton, false);
+
     }
     private void ButtonFadeScale(GameObject button, bool Isactive)
     {

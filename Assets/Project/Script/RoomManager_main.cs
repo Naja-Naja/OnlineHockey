@@ -18,12 +18,20 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     public ReactiveProperty<string> result;
     bool avatarCreated = false;
     string myTeam;
+    public string playerName="Player";
     private void Awake()
     {
         //roomAPI = new RoomAPI();
         //エントリーポイントentrypoint
         //サーバーに接続
-        roomAPI.ConnectServer();
+    }
+    public void InputPlayerName(string playername)
+    {
+        if (playername == "")
+        {
+            playername = playerName;
+        }
+        roomAPI.ConnectServer(playername);
     }
     //サーバー接続のコールバックでルームに接続
     public override void OnConnectedToMaster()
@@ -124,6 +132,7 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
         string room = (string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"];
         if (room == "Game" && avatarCreated == false)
         {
+            Debug.Log(room);
             roomAPI.CreateAvatar();
             text.Value = "";
             canStart.Value = false;
@@ -202,14 +211,18 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcLeftGame()
     {
-        
+
         text.Value = "Choice your Team";
         canjoinTeam.Value = true;
         roomAPI.JoinTeam("beforejoin");
+        //roomAPI.AvatarDestroy();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players.Length; i++)
         {
-            Destroy(players[i]);
+            if (players[i].GetPhotonView().IsMine)
+            {
+                PhotonNetwork.Destroy(players[i]);
+            }
         }
         avatarCreated = false;
 
