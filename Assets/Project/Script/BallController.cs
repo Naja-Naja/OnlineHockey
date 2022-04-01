@@ -55,15 +55,15 @@ public class BallController : MonoBehaviourPunCallbacks
             if (collision.gameObject.GetPhotonView().IsMine == false) 
             { 
                 Debug.Log("やらない");
-                rb2d.velocity = Vector2.zero;
-                speedCon = false;
-                Invoke("startSpeedCon", 0.2f);
+                //rb2d.velocity = Vector2.zero;
+                //speedCon = false;
+                //Invoke("startSpeedCon", 0.2f);
             }
             //スマッシュ
             else if (1f<Vector2.Distance(this.transform.position,collision.transform.position))
             {
                 
-                photonView.RPC(nameof(RpcBallSmash), RpcTarget.All,
+                photonView.RPC(nameof(RpcBallSmash), RpcTarget.AllViaServer,
                     new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z),
                     rb2d.velocity
                     );
@@ -71,7 +71,7 @@ public class BallController : MonoBehaviourPunCallbacks
             //通常反射
             else
             {
-                photonView.RPC(nameof(RpcBallBound), RpcTarget.All,
+                photonView.RPC(nameof(RpcBallBound), RpcTarget.AllViaServer,
                     new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z),
                     rb2d.velocity
                     );

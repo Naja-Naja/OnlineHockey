@@ -29,6 +29,7 @@ public class RoomAPI : MonoBehaviourPunCallbacks
             //hashtable["RoomState"] = "Matching";
             //PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
         }
+        //AvatarDestroy();
     }
     public void JoinTeam(string joinTeam)
     {
@@ -72,37 +73,58 @@ public class RoomAPI : MonoBehaviourPunCallbacks
         string myTeam = (PhotonNetwork.LocalPlayer.CustomProperties["myTeam"] is string value) ? value : "null";
         if (myTeam == "Left")
         {
-            //int count = 0;
-            //var players = PhotonNetwork.PlayerList;
-            //for (int i = 0; i < players.Length; i++)
-            //{
-            //    string tmp = (string)players[i].CustomProperties["myTeam"];
-            //    if (tmp == "Left")
-            //    {
-            //        count++;
-            //    }
-            //}
-            //if (count == 1)
-            //{
-            //    //自身のアバター（ネットワークオブジェクト）を生成する
-            //    var position = new Vector3(-6f, 0f);
-            //    PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
-            //}
-            //else if (count == 2)
-            //{
-
-            //}
             //自身のアバター（ネットワークオブジェクト）を生成する
-            var position = new Vector3(-6f, 0f);
-            PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
-
+            string mypos = CheckAmIFront();
+            if (mypos == "front"||mypos=="None")
+            {
+                var position = new Vector3(-6f, 0f);
+                PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            }
+            else if (mypos == "back")
+            {
+                var position = new Vector3(-4f, 0f);
+                PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            }
         }
         else if (myTeam == "Right")
         {
-            //自身のアバター（ネットワークオブジェクト）を生成する
-            var position = new Vector3(6f, 0f);
-            PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            string mypos = CheckAmIFront();
+            if (mypos == "front" || mypos == "None")
+            {
+                var position = new Vector3(6f, 0f);
+                PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            }
+            else if (mypos == "back")
+            {
+                var position = new Vector3(4f, 0f);
+                PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+            }
         }
+    }
+    private string CheckAmIFront()
+    {
+        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        //var players = PhotonNetwork.PlayerList;
+        var players = PhotonNetwork.PlayerListOthers;
+
+        int mynum = PhotonNetwork.LocalPlayer.ActorNumber;
+        string myTeam = (PhotonNetwork.LocalPlayer.CustomProperties["myTeam"] is string value) ? value : "null";
+        for (int i = 0; i < players.Length; i++)
+        {
+            string playerTeam = (players[i].CustomProperties["myTeam"] is string _value) ? _value : "null";
+            if (myTeam == playerTeam)
+            {
+                if (players[i].ActorNumber > mynum)
+                {
+                    return "front";
+                }
+                else
+                {
+                    return "back";
+                }
+            }
+        }
+        return "None";
     }
     public void CreateBall()
     {
@@ -128,6 +150,17 @@ public class RoomAPI : MonoBehaviourPunCallbacks
     {
         //ボールを削除
         var ball = GameObject.FindWithTag("ball");
-        Destroy(ball);
+        PhotonNetwork.Destroy(ball);
+    }
+    [PunRPC]
+    public void AvatarDestroy()
+    {
+        //アバターを削除
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < players.Length; i++)
+        {
+            PhotonNetwork.Destroy(players[i]);
+            //Destroy(players[i]);
+        }
     }
 }

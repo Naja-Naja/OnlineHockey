@@ -1825,7 +1825,6 @@ GameObject:
   - component: {fileID: 1000668715}
   - component: {fileID: 1000668714}
   - component: {fileID: 1000668718}
-  - component: {fileID: 1000668719}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1932,7 +1931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a3ba885880efd46a0d4c055acad111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleUIManager: {fileID: 1000668719}
+  titleUIManager: {fileID: 0}
   titleText: {fileID: 1741390639}
   textBox: {fileID: 1993253516}
   choice: {fileID: 8300000, guid: fbc588a3cf3b1bb4ca847cdab7f3407c, type: 3}
@@ -1951,24 +1950,6 @@ MonoBehaviour:
   leftTeamButton: {fileID: 540324921}
   rightTeamButton: {fileID: 1039346415}
   backChoiceTeamButton: {fileID: 985133701}
---- !u!114 &1000668719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000668713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeaac90729b92d940a2da2a7ee0b170a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Title:
-    value: 
-  startbutton:
-    value: 0
-  textBox:
-    value: 0
 --- !u!1 &1003968524
 GameObject:
   m_ObjectHideFlags: 0
