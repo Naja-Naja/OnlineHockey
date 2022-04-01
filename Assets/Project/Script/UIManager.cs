@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject textBox;
     [SerializeField] AudioClip choice;
     [SerializeField] AudioClip undo;
+    [SerializeField] AudioClip judge;
     //[SerializeField] Manager manager;
     [SerializeField] RoomManager_main roomManager;
     [SerializeField] PlayerList playerList;
@@ -69,6 +70,10 @@ public class UIManager : MonoBehaviour
 
         IDisposable subscription_result = roomManager.result.Subscribe(x => {
             TextFade(x,result);
+            if (x != "")
+            {
+                AudioManager.SE_Play(judge);
+            }
         });
 
         IDisposable subscription_leftplayerlist = playerList.leftPlayerList.Subscribe(x => {

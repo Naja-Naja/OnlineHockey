@@ -1936,6 +1936,7 @@ MonoBehaviour:
   textBox: {fileID: 1993253516}
   choice: {fileID: 8300000, guid: fbc588a3cf3b1bb4ca847cdab7f3407c, type: 3}
   undo: {fileID: 8300000, guid: 17bb575017144ca41b6faa5b8b2b7578, type: 3}
+  judge: {fileID: 8300000, guid: c3fa625796f2f824ab4451b69d3f5692, type: 3}
   roomManager: {fileID: 1404525395}
   playerList: {fileID: 1404525391}
   title: {fileID: 1741390636}
