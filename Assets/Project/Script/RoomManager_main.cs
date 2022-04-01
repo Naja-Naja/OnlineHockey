@@ -49,7 +49,11 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
         result.Value = "";
         myTeam = "beforejoin";
         //参加チーム選択ボタンを表示
+        string room = (string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"];
+        Debug.Log("Room State is " + room);
+
         canjoinTeam.Value = true;
+
         text.Value = "Choice your Team";
     }
     //参加チーム選択ボタンによってチームに参加する
@@ -83,6 +87,7 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     //チーム登録状況アップデートのコールバックでゲーム参加可能なら開始ボタンを生成する
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
+        if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] != "Ready") { return; }
         Debug.Log("開始チェック");
         if (PhotonNetwork.IsMasterClient)
         {
@@ -104,28 +109,33 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     {
         //RoomPropertiesUpDate_ChangeUI();
         //RoomPropertiesUpDate_BGMChanger();
+        RoomPropertiesUpDate_ChangeUI();
         RoomPropertiesUpDate_CreateAvatar();
         RoomPropertiesUpDate_Checkmywin();
         //RoomPropertiesUpDate_CheckCanRetry();
     }
-    //void RoomPropertiesUpDate_ChangeUI()
-    //{
-    //    string room = (string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"];
-    //    if (room == "Game")
-    //    {
-    //        canjoinTeam.Value = false;
-    //        canStart.Value = false;
-    //        canRetry.Value = false;
-    //        canLeftGame.Value = false;
-    //        canBack.Value = false;
-    //        text.Value = "";
-    //        result.Value = "";
-    //    }
-    //    else if(room == "Ready")
-    //    {
+    void RoomPropertiesUpDate_ChangeUI()
+    {
+        //string room = (string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"];
+        //if (room == "Game")
+        //{
+        //    canjoinTeam.Value = false;
+        //    canStart.Value = false;
+        //    canRetry.Value = false;
+        //    canLeftGame.Value = false;
+        //    canBack.Value = false;
+        //    text.Value = "";
+        //    result.Value = "";
+        //}
+        //else if (room == "Result")
+        //{
 
-    //    }
-    //}
+        //}
+        //else if (room == "Ready")
+        //{
+
+        //}
+    }
     //ルームプロパティがGameに変更されたときにAvatarを生成する
     private void RoomPropertiesUpDate_CreateAvatar()
     {
@@ -170,7 +180,8 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             //ボール消去
-            photonView.RPC(nameof(roomAPI.BallDestroy), RpcTarget.All);
+            //photonView.RPC(nameof(roomAPI.BallDestroy), RpcTarget.All);
+            roomAPI.BallDestroy();
             //再戦ボタンの表示
             canRetry.Value = true;
             canLeftGame.Value = true;

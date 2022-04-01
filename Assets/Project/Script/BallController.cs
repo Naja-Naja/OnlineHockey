@@ -11,6 +11,8 @@ public class BallController : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip wallBound;
     [SerializeField] AudioClip playerBound;
     [SerializeField] AudioClip playerSmashBound;
+    [SerializeField] GameObject smashEffect;
+    private SmashEffectManager smashEffectManager;
 
     //bool movestart = false;
     //bool IsGameEnd = false;
@@ -19,6 +21,7 @@ public class BallController : MonoBehaviourPunCallbacks
     void Start()
     {
         Invoke("ballStart", 3f);
+        smashEffectManager = Instantiate(smashEffect).GetComponent<SmashEffectManager>();
     }
     void ballStart()
     {
@@ -103,6 +106,7 @@ public class BallController : MonoBehaviourPunCallbacks
         smash = true;
         this.transform.position = position;
         rb2d.velocity = new Vector2(vector.x + Mathf.Sign(vector.x) * 3f, vector.y + Mathf.Sign(vector.y) * 3f) * 1.2f;
-        AudioManager.SE_Play(playerSmashBound);
+        AudioManager.SE2_Play(playerSmashBound);
+        smashEffectManager.PlaySmashEffect(position);
     }
 }

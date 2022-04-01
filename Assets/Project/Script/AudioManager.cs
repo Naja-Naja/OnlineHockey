@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] public AudioSource SE = null;
     [SerializeField] public AudioSource BGM = null;
+    [SerializeField] public AudioSource SE2 = null;
+    static AudioSource SE_smash = null;
     static AudioSource SE_audio = null;
     static AudioSource BGM_audio = null;
     public float bgmVol;
@@ -17,6 +19,7 @@ public class AudioManager : MonoBehaviour
     {
         SE_audio = SE;
         BGM_audio = BGM;
+        SE_smash = SE2;
         //DOTween.To(() => BGM_audio.volume, (x) => BGM_audio.volume = x, 0f, 0.5f);
 
     }
@@ -24,6 +27,11 @@ public class AudioManager : MonoBehaviour
     {
         SE_audio.clip = clip;
         SE_audio.Play();
+    }
+    public static void SE2_Play(AudioClip clip)
+    {
+        SE_smash.clip = clip;
+        SE_smash.Play();
     }
     public static void BGM_Play(AudioClip clip)
     {
