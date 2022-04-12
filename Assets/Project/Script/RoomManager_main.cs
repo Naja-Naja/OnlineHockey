@@ -36,7 +36,9 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
     //サーバー接続のコールバックでルームに接続
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions(), TypedLobby.Default);
+        var roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 4;
+        PhotonNetwork.JoinOrCreateRoom("Room", roomOptions, TypedLobby.Default);
     }
 
     //入室のコールバックで自身をChoiceに、ホストなら部屋をMatchingに設定
@@ -150,6 +152,11 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
             avatarCreated = true;
         }
     }
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        Debug.Log(otherPlayer + "が退出しました。ゲーム終了いたします");
+        GameJudge("None");
+    }
     //DeadLineから敗者がこの関数を呼ぶ
     public void GameJudge(string loser)
     {
@@ -161,6 +168,14 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
             roomAPI.LoseEvent(loser);
             GameInit();
             
+        }
+        else if (loser == "None")
+        {
+            roomAPI.SetRoomProperties("Result");
+            Debug.Log("切断による中断");
+            result.Value = "Disconnect";
+            roomAPI.LoseEvent(loser);
+            GameInitOnDisConnect();
         }
     }
     //勝者の表示処理
@@ -184,6 +199,16 @@ public class RoomManager_main : MonoBehaviourPunCallbacks
             roomAPI.BallDestroy();
             //再戦ボタンの表示
             canRetry.Value = true;
+            canLeftGame.Value = true;
+        }
+    }
+    void GameInitOnDisConnect()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            //ボール消去
+            //photonView.RPC(nameof(roomAPI.BallDestroy), RpcTarget.All);
+            roomAPI.BallDestroy();
             canLeftGame.Value = true;
         }
     }
